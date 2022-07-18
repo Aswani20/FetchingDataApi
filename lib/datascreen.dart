@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:fetchingapi/detailspage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -33,10 +34,13 @@ class _DataScreen extends State<DataScreen> {
               return Container();
             } else if (snapshot.hasError) {
               return Container(
-                child: Text('errr '),
+                child: Text('Erorr'),
               );
             } else {
-              return CircularProgressIndicator();
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+
             }
           }),
     );
@@ -51,9 +55,18 @@ class DataItems extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
+        // margin: EdgeInsets.all(5),
+        // padding: const EdgeInsets.all(5.0),
+        // decoration: BoxDecoration(
+        //   border: Border.all(width: 3, color: Colors.blue),
+        //   borderRadius: BorderRadius.all(Radius.circular(20)),        ),
         height: 170,
         child: Center(
-          child: Card(
+          child: ElevatedButton(onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context){
+              return DetailsPage(_data.title,_data.content);
+            }));
+          },child: Card(
             child: Row(
               children: [
                 Container(
@@ -61,16 +74,17 @@ class DataItems extends StatelessWidget{
                   width: 200,
                   child: Image.network(_data.picture),
                 ),
-                SizedBox(
-                  width: 20,
+                const SizedBox(
+                  width: 10,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [Text(_data.title)],
-                )
+                ),
+
               ],
             ),
-          ),
+          ),),
         ));
   }
 
